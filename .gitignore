@@ -5,6 +5,12 @@
 src/main/resources/settings.properties
 src/main/resources/gcloudkey.json
 
+# exclude local mp3 test files
+mp3
+
+# Exclude local java file for testing
+src/main/java/Test.java
+
 #idea folder
 .idea/
 
