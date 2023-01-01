@@ -1,0 +1,27 @@
+mysql.db:jdbc:mysql://localhost/threadvoice?useUnicode=yes&characterEncoding=UTF-8&user=root&password=12345&useSSL=false&serverTimezone=UTC
+
+site.domain=threadvoice.net
+urlpath=https://threadvoice.net/audio/
+
+# Local storage location of audio files
+voice.path=/var/www/html/audio/
+
+# Google TTS
+gtt.config=src/main/resources/gcloudtts.json
+
+# Microsoft
+microsoft.key=xxxxxxxxxxxxxxxx
+
+# Amazon Polly Keys
+aws.accesskey=xxxxxxxxxxxxxxxx
+aws.secretkey=xxxxxxxxxxxxxxxx
+
+# VoiceRSS
+voicerss.key=xxxxxxxxxxxxxxxx
+
+# Twitter Settings
+twitter.username=@threadvoice
+tw.apiKey=xxxxxxxxxxxxxxxx
+tw.apiSecretKey=xxxxxxxxxxxxxxxx
+tw.accessToken=xxxxxxxxxxxxxxxx
+tw.accessTokenSecret=xxxxxxxxxxxxxxxx
