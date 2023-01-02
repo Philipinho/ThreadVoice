@@ -8,6 +8,10 @@ src/main/resources/gcloudkey.json
 # exclude local mp3 test files
 mp3
 
+# other exclusions
+*.out
+dependency-reduced-pom.xml
+
 # Exclude local java file for testing
 src/main/java/Test.java
 
