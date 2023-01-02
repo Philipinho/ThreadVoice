@@ -106,12 +106,13 @@ public class Stream {
 
                                     // You can comment out a provider if you do not wish to use them. Processing decision is based on the character limits of the provider
 
-                                    if(threadContent.length() < 1500){
-                                        outputFilename = MicrosoftTTS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
-                                    } else if(threadContent.length() < 2995) {
-                                        outputFilename = AmazonTTS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
+                                    if(threadContent.length() < 2995) {
+                                        outputFilename = randomTTSProvider(threadContent.toString(), threadLanguage, voiceFilename);
+                                        //outputFilename = AmazonTTS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
                                     } else if(threadContent.length() < 4995) {
                                         outputFilename = GoogleTTS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
+                                    } else if(threadContent.length() < 8000){
+                                        outputFilename = MicrosoftTTS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
                                     } else {
                                         outputFilename = VoiceRSS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
                                     }
@@ -179,8 +180,6 @@ public class Stream {
             e.printStackTrace();
         }
 
-
-
     }
 
     private static String credits(String language, String authorName){
@@ -208,14 +207,15 @@ public class Stream {
         }
     }
 
-    /* we can randomize the TTS provider
-    public static String randomTTSProvider(String threadContent, String voiceFilename, String language){
-        switch (new Random().nextInt(2)){
-            case 0: return GoogleTTS.processSpeech(threadContent, voiceFilename);
+    // randomize the TTS provider
+    public static String randomTTSProvider(String threadContent,  String language, String voiceFilename){
+        switch (new Random().nextInt(3)){
+            case 0: return GoogleTTS.processSpeech(threadContent, language, voiceFilename);
             case 1: return MicrosoftTTS.processSpeech(threadContent, language,voiceFilename);
             case 2: return AmazonTTS.processSpeech(threadContent, language, voiceFilename);
-            default: return GoogleTTS.processSpeech(threadContent, voiceFilename);
+
+            default: return VoiceRSS.processSpeech(threadContent, language, voiceFilename);
         }
     }
-     */
+
 }
