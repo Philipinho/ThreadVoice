@@ -27,32 +27,39 @@ public class MicrosoftTTS {
         switch (language){
             case "en": voiceId = randomEnglishVoice();
                 break;
-            case "fr": voiceId = MicrosoftVoice.frenchHortenseRUS;
+            case "fr": voiceId = MicrosoftVoice.frenchClaudeMale;
                 break;
-            case "es": voiceId = MicrosoftVoice.spanishHelenaRUS;
+            case "es": voiceId = MicrosoftVoice.spanishSaulMale;
                 break;
-            case "pt": voiceId = MicrosoftVoice.portugueseHeloisaRUS;
+            case "pt": voiceId = MicrosoftVoice.portugueseFranciscaFemale;
                 break;
-            case "gl": voiceId = MicrosoftVoice.portugueseHeloisaRUS;
+            case "gl": voiceId = MicrosoftVoice.portugueseAntonioMale;
                 break;
-            case "de": voiceId = MicrosoftVoice.germanHeddaRUS;
+            case "de": voiceId = MicrosoftVoice.germanKasperMale;
                 break;
-            case "it": voiceId = MicrosoftVoice.italianLuciaRUS;
+            case "it": voiceId = MicrosoftVoice.italianBenignoMale;
                 break;
-            case "tr": voiceId = MicrosoftVoice.turkishSedaRUS;
+            case "tr": voiceId = MicrosoftVoice.turkishEmelFemale;
                 break;
-            case "ru": voiceId = MicrosoftVoice.russianEkaterinaRUS;
+            case "ru": voiceId = MicrosoftVoice.russianSvetlanaFemale;
                 break;
-            default: voiceId = MicrosoftVoice.englishJessaNeural;
+            default: voiceId = MicrosoftVoice.englishJessaFemale;
                 break;
         }
 
         language = LanguageDetection.select(language);
 
-        String gender = "Male";
+
+        String gender = "";
+        if (voiceId.toLowerCase().contains("female")){
+            gender = "Female";
+        } else {
+            gender = "Male";
+        }
+
         String rawSsml = "<speak version='1.0' xml:lang='%s'><voice xml:lang='%s' xml:gender='%s' name='%s'>%s</voice></speak>";
 
-        String ssmlData = String.format(rawSsml,language,language,gender,voiceId,speechText);
+        String ssmlData = String.format(rawSsml, language, language, gender, voiceId, speechText);
 
         Map<String,String> headers = new HashMap<>();
         headers.put("Authorization", getBearerToken());
@@ -98,12 +105,12 @@ public class MicrosoftTTS {
 
     private static String randomEnglishVoice(){
         switch (new Random().nextInt(5)){
-            case 0: return MicrosoftVoice.englishGuyRus;
-            case 1: return MicrosoftVoice.englishJessaRUS;
-            case 2: return MicrosoftVoice.englishBenjaminRUS;
-            case 3: return MicrosoftVoice.englishJessaNeural;
-            case 4: return MicrosoftVoice.englishZiraRUS;
-            default: return MicrosoftVoice.englishJessaRUS;
+            case 0: return MicrosoftVoice.englishJennyFemale;
+            case 1: return MicrosoftVoice.englishCoraFemale;
+            case 2: return MicrosoftVoice.englishTonyMale;
+            case 3: return MicrosoftVoice.englishNoahMale;
+            case 4: return MicrosoftVoice.englishGuyMale;
+            default: return MicrosoftVoice.englishJessaFemale;
         }
     }
 

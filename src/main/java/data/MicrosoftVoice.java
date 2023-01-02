@@ -2,28 +2,69 @@ package data;
 
 public class MicrosoftVoice {
 
-    public static String englishJessaRUS = "en-US-JessaRUS";
-    public static String englishJessaNeural = "en-US-JessaNeural";
+    // English Male voices
 
-    public static String englishZiraRUS = "en-US-ZiraRUS";
-    public static String englishBenjaminRUS = "en-US-BenjaminRUS";
+    public static String englishGuyMale = "en-US-GuyNeural";
+    public static String englishTonyMale = "en-US-TonyNeural";
+    public static String englishNoahMale = "en-GB-NoahNeural";
 
-    public static String englishGuyRus = "en-US-Guy24kRUS";
-    public static String englishGuyNeural = "en-US-GuyNeural";
-    private static String englishHazelRUS = "en-GB-HazelRUS";
+    // English - Female voices
+    public static String englishJessaFemale = "en-US-JessaNeural";
+    public static String englishJennyFemale = "en-US-JennyNeural";
+    public static String englishCoraFemale = "en-US-CoraNeural";
 
-    public static String frenchHortenseRUS = "fr-FR-HortenseRUS";
 
-    public static String germanHeddaRUS = "de-DE-HeddaRUS";
+    // French - Male Voices
+    public static String frenchClaudeMale = "fr-FR-ClaudeNeural";
+    public static String frenchJeromeMale = "fr-FR-JeromeNeural";
 
-    public static String spanishHelenaRUS = "es-ES-HelenaRUS";
+    // French - Female voices
+    public static String frenchCelesteFemale = "fr-FR-CelesteNeural";
+    public static String frenchYvetteFemale = "fr-FR-YvetteNeural";
 
-    public static String portugueseHeloisaRUS = "pt-BR-HeloisaRUS";
+    // German - Male Voices
+    public static String germanConradMale = "de-DE-ConradNeural";
+    public static String germanKasperMale = "de-DE-KasperNeural";
 
-    public static String italianLuciaRUS = "it-IT-LuciaRUS";
 
-    public static String russianEkaterinaRUS = "ru-RU-EkaterinaRUS";
+    // German - Female voices
+    public static String germanKatjaFemale = "de-DE-KatjaNeural";
+    public static String germanLouisaFemale = "de-DE-LouisaNeural";
 
-    public static String turkishSedaRUS = "tr-TR-SedaRUS";
+    // Spanish - Male voices
+    public static String spanishSaulMale = "es-ES-SaulNeural";
+
+    // Spanish Female Voices
+    public static String spanishElviraMale = "es-ES-ElviraNeural";
+
+    // Portuguese - Male voices
+    public static String portugueseJulioMale = "pt-BR-JulioNeural";
+    public static String portugueseAntonioMale = "pt-BR-AntonioNeural";
+
+
+    // Potuguese - Female voices
+    public static String portugueseFranciscaFemale = "pt-BR-FranciscaNeural";
+    public static String portugueseElzaFemale = "pt-BR-ElzaNeural";
+
+
+    // Italian - Male voices
+    public static String italianBenignoMale = "it-IT-BenignoNeural";
+    public static String italianCalimeroMale = "it-IT-CalimeroNeural";
+
+    // Italian Female voices
+    public static String italianIrmaFemale = "it-IT-IrmaNeural";
+    public static String italianImeldaFemale = "it-IT-ImeldaNeural";
+
+    // Turkish - Male voices
+    public static String turkishAhmetMale = "tr-TR-AhmetNeural";
+
+    // Turkish - Female voices
+    public static String turkishEmelFemale = "tr-TR-EmelNeural";
+
+    // Russian - Male voices
+    public static String russianDmitryMale = "ru-RU-DmitryNeural";
+
+    // Russian - Female voices
+    public static String russianSvetlanaFemale = "ru-RU-SvetlanaNeural";
 
 }
