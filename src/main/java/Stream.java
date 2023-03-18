@@ -27,26 +27,30 @@ public class Stream {
 
         String botUsername = ReadProperty.getValue("twitter.username");
 
-        try{
+        try {
             List<StreamRules.StreamRule> rules = twitter.retrieveFilteredStreamRules();
 
-            if (rules == null){
+            if (rules == null) {
                 twitter.addFilteredStreamRule(botUsername, "");
             } else {
                 for (StreamRules.StreamRule rule : rules) {
-                    twitter.deleteFilteredStreamRuleId(rule.getId());
+                    if (!Objects.equals(rule.getValue(), botUsername)) {
+                        twitter.deleteFilteredStreamRuleId(rule.getId());
+                        twitter.addFilteredStreamRule(botUsername, "");
+                    }
                 }
-                twitter.addFilteredStreamRule(botUsername, "");
             }
 
-        } catch (Exception e){
+            System.out.println("Stream connected to: " + botUsername);
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         twitter.startFilteredStream(new IAPIEventListener() {
             @Override
             public void onStreamError(int i, String s) {
-                System.out.println(s);
+                System.out.println("Error: " + s);
 
             }
 
@@ -58,10 +62,10 @@ public class Stream {
 
                     String threadLanguage = null;
 
-                    if (tweet.getTweetType().equals(TweetType.QUOTED)){
+                    if (tweet.getTweetType().equals(TweetType.QUOTED)) {
                         tweetReferencedId = tweet.getInReplyToStatusId();
 
-                    } else if (tweet.getInReplyToStatusId() != null){
+                    } else if (tweet.getInReplyToStatusId() != null) {
                         tweetReferencedId = tweet.getInReplyToStatusId();
                     }
 
@@ -102,16 +106,16 @@ public class Stream {
 
                                 } else {
 
-                                    threadContent.append("\n").append(credits(threadLanguage,EmojiParser.removeAllEmojis(formatTweets.get(0).getUser().getName())));
+                                    threadContent.append("\n").append(credits(threadLanguage, EmojiParser.removeAllEmojis(formatTweets.get(0).getUser().getName())));
 
                                     // You can comment out a provider if you do not wish to use them. Processing decision is based on the character limits of the provider
 
-                                    if(threadContent.length() < 2995) {
+                                    if (threadContent.length() < 2995) {
                                         outputFilename = randomTTSProvider(threadContent.toString(), threadLanguage, voiceFilename);
                                         //outputFilename = AmazonTTS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
-                                    } else if(threadContent.length() < 4995) {
+                                    } else if (threadContent.length() < 4995) {
                                         outputFilename = GoogleTTS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
-                                    } else if(threadContent.length() < 8000){
+                                    } else if (threadContent.length() < 8000) {
                                         outputFilename = MicrosoftTTS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
                                     } else {
                                         outputFilename = VoiceRSS.processSpeech(threadContent.toString(), threadLanguage, voiceFilename);
@@ -157,10 +161,10 @@ public class Stream {
 
     }
 
-    private static String tweetMessage(String threadAuthor, String audioLink){
+    private static String tweetMessage(String threadAuthor, String audioLink) {
 
-        String[] messages = {"Yes! This thread has been converted to voice version. You can listen or download it via ", "Hey, thread from @" +threadAuthor +  " is ready in audio format. You can listen or download it via: "};
-        int rand = (int)(messages.length * Math.random());
+        String[] messages = {"Yes! This thread has been converted to voice version. You can listen or download it via ", "Hey, thread from @" + threadAuthor + " is ready in audio format. You can listen or download it via: "};
+        int rand = (int) (messages.length * Math.random());
 
         return messages[rand] + " " + audioLink;
     }
@@ -173,48 +177,61 @@ public class Stream {
                         .builder().inReplyToTweetId(inReplyToTweetId).build())
                 .build();
 
-        try{
+        try {
             Tweet tweet = twitter.postTweet(tweetParams);
             System.out.println("Replied to: " + whoMentionedMe + " - Reply Id: " + tweet.getId());
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    private static String credits(String language, String authorName){
+    private static String credits(String language, String authorName) {
         String domainName = ReadProperty.getValue("site.domain");
 
-        switch (language){
+        switch (language) {
 
-            case "fr": return "Écrit par " + authorName +".\n Audio propulsé par " + domainName;
+            case "fr":
+                return "Écrit par " + authorName + ".\n Audio propulsé par " + domainName;
 
-            case "es": return "Escrito por "+ authorName +".\n Audio impulsado por " + domainName;
+            case "es":
+                return "Escrito por " + authorName + ".\n Audio impulsado por " + domainName;
 
-            case "pt": return "Escrito por " + authorName +".\n Áudio desenvolvido por " + domainName;
+            case "pt":
+                return "Escrito por " + authorName + ".\n Áudio desenvolvido por " + domainName;
 
-            case "gl": return "Escrito por "+ authorName +".\n Audio impulsado por " + domainName;
+            case "gl":
+                return "Escrito por " + authorName + ".\n Audio impulsado por " + domainName;
 
-            case "de": return "Geschrieben von "+ authorName +".\n Audio von " + domainName;
+            case "de":
+                return "Geschrieben von " + authorName + ".\n Audio von " + domainName;
 
-            case "tr": return "Yazan "+ authorName + "Ses, " + domainName + " tarafından desteklenmektedir.";
+            case "tr":
+                return "Yazan " + authorName + "Ses, " + domainName + " tarafından desteklenmektedir.";
 
-            case "it": return "Scritto da "+ authorName +".\n Audio alimentato da " + domainName;
+            case "it":
+                return "Scritto da " + authorName + ".\n Audio alimentato da " + domainName;
 
-            case "ru": return "Автор Иеремия " + authorName + " Аудио от " + domainName;
+            case "ru":
+                return "Автор Иеремия " + authorName + " Аудио от " + domainName;
 
-            default: return "Written by " + authorName + ".\n Audio Powered by " + domainName;
+            default:
+                return "Written by " + authorName + ".\n Audio Powered by " + domainName;
         }
     }
 
     // randomize the TTS provider
-    public static String randomTTSProvider(String threadContent,  String language, String voiceFilename){
-        switch (new Random().nextInt(3)){
-            case 0: return GoogleTTS.processSpeech(threadContent, language, voiceFilename);
-            case 1: return MicrosoftTTS.processSpeech(threadContent, language,voiceFilename);
-            case 2: return AmazonTTS.processSpeech(threadContent, language, voiceFilename);
+    public static String randomTTSProvider(String threadContent, String language, String voiceFilename) {
+        switch (new Random().nextInt(3)) {
+            case 0:
+                return GoogleTTS.processSpeech(threadContent, language, voiceFilename);
+            case 1:
+                return MicrosoftTTS.processSpeech(threadContent, language, voiceFilename);
+            case 2:
+                return AmazonTTS.processSpeech(threadContent, language, voiceFilename);
 
-            default: return VoiceRSS.processSpeech(threadContent, language, voiceFilename);
+            default:
+                return VoiceRSS.processSpeech(threadContent, language, voiceFilename);
         }
     }
 
